@@ -63,4 +63,15 @@ Scheduler <-- PosixEnginePollerManager
 class EventEngine {
 + absl::StatusOr<std::unique_ptr<Listener>> CreateListener(Listener::AcceptCallback on_accept, absl::AnyInvocable<void(absl::Status)> on_shutdown, const EndpointConfig &config, std::unique_ptr<MemoryAllocatorFactory> memory_allocator_factory)
 }
+class ResolvedAddress {
+  - char address_[MAX_SIZE_BYTES]
+  - socklen_t size_
+  + const struct sockaddr *address() const
+  + socklen_ size() const
+}
+class Listener {
+  + absl::StatusOr<int> Bind(const ResolvedAddress &addr)
+  + absl::Status Start()
+}
+ResolvedAddress <.. Listener
 ```

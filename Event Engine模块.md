@@ -74,4 +74,20 @@ class Listener {
   + absl::Status Start()
 }
 ResolvedAddress <.. Listener
+
+class ListenerSupportsFdExtension {
+  + absl::StatusOr<int> BindWithFd(const EventEngine::ResolvedAddress &addr, OnPosixBindNewFdCallback on_bind_new_fd)
+  + absl::Status HandleExternalConnection(int listener_fd, int fd, SliceBuffer *pending_data)
+  + void ShutdownListeningFds()
+}
+
+class PosixListenerWithFdSupport {
+}
+Listener <-- PosixListenerWithFdSupport
+ListenerSupportsFdExtension <-- PosixListenerWithFdSupport
+
+class PosixEngineListener {
+  - std::shared_ptr<PosixEngineListenerImpl> impl_
+}
+PosixListenerWithFdSupport <-- PosixEngineListener
 ```

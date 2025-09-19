@@ -1,0 +1,5 @@
+```mermaid
+classdiagm
+class C {
+}
+```
